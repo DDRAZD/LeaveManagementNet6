@@ -1,0 +1,43 @@
+﻿clicking "use individual accounts" in setting up the project creates the Areas section and adds scaffolding of Identity
+
+instead of using mulitple "using" statements in the views for razor sections, you can use _ViewImport.cshtml
+
+
+------------------------------------
+appsettings.json is where the DBContect string will be defined - this replaces the webconfig in .Net 5
+
+-----------------------------------------------------------------
+
+program.cs is old school "main" - it runs every time the app is run;
+In the builder, among others, dependancy injection will be defined (same as in Unityconfig in .Net 5)
+
+after the entire build was done, inclusive of the middleware (the code that allows the environment such as the HTTP set up)
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseMigrationsEndPoint();
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+then there is "app.Run()" that runs the app
+
+------------------------------------------------------------
+migrations - after changes run
+update-database
+
+to check the data base you go either regularly to SQL Server Management Studio or within Visual studio: view-> SQL Object Explorer
+on any table, a quick right click ->view data will show you the table strcuture just like "view first 1000 rows" in SQL Server Management Studio
+
+------------------------------------------------------
+when adding the main type of user, add its class in "Data", then make inherit from IdentityUser
+this will integate Asp.net.identity automatically and allow you teh build in user management
+
+after that inheritance, you go to the builder (it is in program.cs)-> you update the identity to the type of the user
+you replace IdentityUser with your class here (in this case, Employee):
+
+builder.Services.AddDefaultIdentity<Employee>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>();
