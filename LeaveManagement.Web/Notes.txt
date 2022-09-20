@@ -41,3 +41,35 @@ you replace IdentityUser with your class here (in this case, Employee):
 
 builder.Services.AddDefaultIdentity<Employee>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+    in addition, whereever it injects identity (LayoutPartial), you have to update to:
+    @inject SignInManager<Employee> SignInManager
+@inject UserManager<Employee> UserManager
+
+and for LayoutPartial to find "Employee", in ViewImports, just add the refernece to the data, where "Employee" resides:
+@using LeaveManagement.Web.Data
+
+    ---------------------------
+
+In DBContenxt, you need to inherit from IdentityDbContext so it will know the db includes the identity db, and you have to be specific on what user type you will 
+be using -> IdentityDbContext<Employee>
+
+--------------------------------
+quick best practices and rules:
+1) use BaseEntity (abstarct class that cannot be instanciated by its own) to align with DRY -> allows you to inherit to every class, very helpful in data base design-> will include ID -> entity framework is looking for key word 'id'
+or looking for the table name (class name) appended infront of Id -> so 'int Id' or 'int LeaveTypeId' (you can continute to use data annotations like you did in .net 5)
+2) always have a primary key, for each table
+3) add the classes (Tables) in the Data section
+
+
+do not use "virtual" for lazy loading in EF Core -> just call a reference to the other table without virtual; initially it was not supported in EF Core, 
+now virtual is supported but requires you to be consistent accross all calls
+
+In migrations - change onDelete to "Restrict" to avoid deletion of one element cascading and deleting all associcated references in other tables, it is not safe
+you do this change manually, before running "update-database". You do this direclty on the migration file. This will obviously be only relevenat in the table
+that has a foriegn key
+
+--------------------------------
+add controller with EF and views -> tie it to the data model you will be working with (The CRUD one)
+as layout page has all the scripts, you can uncheck the scripts box
+use layout but _ViewStart will point to the right layout so no need for paths
