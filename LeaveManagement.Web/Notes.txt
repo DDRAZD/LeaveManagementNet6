@@ -73,3 +73,22 @@ that has a foriegn key
 add controller with EF and views -> tie it to the data model you will be working with (The CRUD one)
 as layout page has all the scripts, you can uncheck the scripts box
 use layout but _ViewStart will point to the right layout so no need for paths
+
+---------------------
+to create the mapping between view model and the models (view model is for UI, model is for the data base), go to the project, right click and go to "manage nuget packages". Seacrch for automapper (it was made by Jimmy Boagard) and install it
+
+also install AutoMapper Dependancy Injection from Jimmy Bogard
+
+once installed, configure it (Similar to the mapping done in .Net 5) -> add folder "Configuration"
+add class in it -> MapperConfig.cs; inherit from Profile (coming from automapper)
+
+build a constructor for it:
+ public MapperConfig()
+        {
+            CreateMap<LeaveType, LeaveTypeVM>().ReverseMap(); //allows conversion from model to view model (from data to UI) while "ReverseMap" adds
+            //..the reverse conversion from VM back to Data model
+            
+        }
+
+Then register it in the Program.cs (that replaces all the config file that were in .Net 5 MVC)
+add: builder.Services.AddAutoMapper(typeof(MapperConfig));

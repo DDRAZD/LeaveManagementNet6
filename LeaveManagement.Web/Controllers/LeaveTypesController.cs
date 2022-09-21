@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LeaveManagement.Web.Data;
+using LeaveManagement.Web.Models;
 
 namespace LeaveManagement.Web.Controllers
 {
@@ -13,17 +14,30 @@ namespace LeaveManagement.Web.Controllers
     {
         private readonly ApplicationDbContext _context;
 
+        //constructor with dependancy injection - the program.cs has in Services already the injection defined (again, no UnityConfig in DotNet Core)
         public LeaveTypesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         // GET: LeaveTypes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index() //returns Task<IActionResult>
         {
-              return _context.LeaveTypes != null ? 
-                          View(await _context.LeaveTypes.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.LeaveTypes'  is null.");
+            var leaveTypes = await _context.LeaveTypes.ToListAsync(); //in sql this is "Select * From LeaveType"
+            if (leaveTypes != null)
+            {
+                return View(leaveTypes);
+            }
+            else
+            {
+                Problem("Entity set 'ApplicationDbContext.LeaveTypes'  is null.");
+                return View();                
+            }
+
+
+           /* return _context.LeaveTypes != null ? 
+                          View(await _context.LeaveTypes.ToListAsync()) : //in sql this is "Select * From LeaveType"
+                          Problem("Entity set 'ApplicationDbContext.LeaveTypes'  is null.");*/
         }
 
         // GET: LeaveTypes/Details/5
@@ -63,7 +77,7 @@ namespace LeaveManagement.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(leaveType);
+            return View(leaveType);//if model state is not valid 
         }
 
         // GET: LeaveTypes/Edit/5
@@ -101,7 +115,7 @@ namespace LeaveManagement.Web.Controllers
                     _context.Update(leaveType);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException) //if two people are updating at same time, that is the issue this catches
                 {
                     if (!LeaveTypeExists(leaveType.Id))
                     {
@@ -154,7 +168,7 @@ namespace LeaveManagement.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LeaveTypeExists(int id)
+        private bool LeaveTypeExists(int id) //not an Action but just a method to ude 
         {
           return (_context.LeaveTypes?.Any(e => e.Id == id)).GetValueOrDefault();
         }
