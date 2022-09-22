@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LeaveManagement.Web.Data.LeaveType>
+﻿@model IEnumerable<LeaveTypeVM>
 
 @{
     ViewData["Title"] = "Index";
@@ -18,12 +18,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.DefaultDays)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateModified)
-            </th>
+            
             <th></th>
         </tr>
     </thead>
@@ -36,12 +31,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DefaultDays)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateModified)
-            </td>
+            
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

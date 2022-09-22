@@ -7,23 +7,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LeaveManagement.Web.Data;
 using LeaveManagement.Web.Models;
+using AutoMapper;
 
 namespace LeaveManagement.Web.Controllers
 {
     public class LeaveTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper mapper;
 
         //constructor with dependancy injection - the program.cs has in Services already the injection defined (again, no UnityConfig in DotNet Core)
-        public LeaveTypesController(ApplicationDbContext context)
+        public LeaveTypesController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
         // GET: LeaveTypes
         public async Task<IActionResult> Index() //returns Task<IActionResult>
         {
-            var leaveTypes = await _context.LeaveTypes.ToListAsync(); //in sql this is "Select * From LeaveType"
+            var leaveTypes = this.mapper.Map<List<LeaveTypeVM>>(await _context.LeaveTypes.ToListAsync()); //in sql this is "Select * From LeaveType"
             if (leaveTypes != null)
             {
                 return View(leaveTypes);
@@ -69,15 +72,18 @@ namespace LeaveManagement.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,DefaultDays,Id,DateCreated,DateModified")] LeaveType leaveType)
+        public async Task<IActionResult> Create(LeaveTypeVM leaveTypeVM)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(leaveType);
+                LeaveType leavetypeToAdd = this.mapper.Map<LeaveType>(leaveTypeVM);
+                leavetypeToAdd.DateCreated = DateTime.Now;
+                leavetypeToAdd.DateModified = DateTime.Now;
+                _context.Add(leavetypeToAdd);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(leaveType);//if model state is not valid 
+            return View(leaveTypeVM);//if model state is not valid 
         }
 
         // GET: LeaveTypes/Edit/5

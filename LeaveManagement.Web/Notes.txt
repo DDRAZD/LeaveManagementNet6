@@ -92,3 +92,10 @@ build a constructor for it:
 
 Then register it in the Program.cs (that replaces all the config file that were in .Net 5 MVC)
 add: builder.Services.AddAutoMapper(typeof(MapperConfig));
+
+to leverage the mapper and to begin using each class as a single purpose (data for database, VM from UI), need to add to the controller dependancy injection and 
+proprty:
+private readonly IMapper mapper;
+and add in the constructor
+this.mapper = mapper (get the mapper as agrugment of IMapper and add "using Automapper")
+and then conversion to view model is simply: "this.mapper.Map<LeaveTypeVM>(what you are converting comes in here)"
