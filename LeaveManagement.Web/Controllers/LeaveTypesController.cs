@@ -57,8 +57,9 @@ namespace LeaveManagement.Web.Controllers
             {
                 return NotFound();
             }
+            LeaveTypeVM leaveTypeVM = mapper.Map<LeaveTypeVM>(leaveType);   
 
-            return View(leaveType);
+            return View(leaveTypeVM);
         }
 
         // GET: LeaveTypes/Create
@@ -99,7 +100,8 @@ namespace LeaveManagement.Web.Controllers
             {
                 return NotFound();
             }
-            return View(leaveType);
+            LeaveTypeVM leaveTypeVM = this.mapper.Map<LeaveTypeVM>(leaveType);
+            return View(leaveTypeVM);
         }
 
         // POST: LeaveTypes/Edit/5
@@ -107,23 +109,25 @@ namespace LeaveManagement.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,DefaultDays,Id,DateCreated,DateModified")] LeaveType leaveType)
+        public async Task<IActionResult> Edit(int id,  LeaveTypeVM leaveTypeVM)
         {
-            if (id != leaveType.Id)
+            if (id != leaveTypeVM.Id) //this is a fail safe - the ID already exists in leaveTypeVM but if someone hijacked the session, this can be manipulated with
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                try
+                try //all done in try-catch for the case someone else is also submitting at same time
                 {
+                    LeaveType leaveType = this.mapper.Map<LeaveType>(leaveTypeVM);
+                    leaveType.DateModified = DateTime.Now;
                     _context.Update(leaveType);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException) //if two people are updating at same time, that is the issue this catches
                 {
-                    if (!LeaveTypeExists(leaveType.Id))
+                    if (!LeaveTypeExists(leaveTypeVM.Id))
                     {
                         return NotFound();
                     }
@@ -134,7 +138,7 @@ namespace LeaveManagement.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(leaveType);
+            return View(leaveTypeVM);
         }
 
         // GET: LeaveTypes/Delete/5
