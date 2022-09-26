@@ -99,3 +99,26 @@ private readonly IMapper mapper;
 and add in the constructor
 this.mapper = mapper (get the mapper as agrugment of IMapper and add "using Automapper")
 and then conversion to view model is simply: "this.mapper.Map<LeaveTypeVM>(what you are converting comes in here)"
+
+--------------------------------
+to use js with easy confirms (like "you sure you want to delete"), right click project and "add"  client side libraries: "sweetalert"
+if you right click the project and go to "manage client side libraries" you will see the libman.json file listing sweetalert 
+the library will be added under "lib" (wwwroot)
+
+add in the view (usually the index) 
+
+
+@section Scripts {
+    <script>
+        $(function(){
+
+        });
+
+    </script>
+}
+
+as this is expected in the layout page in :
+@await RenderSectionAsync("Scripts", required: false)
+also, in the layout page, add the script globaly using: ORDER MATTERS; add it after sourcing bootsrrap and jquery; any 3rd party library should come
+after the bootstrap and jquery BUT BEFORE your site.js
+<script src="~/lib/sweetalert/sweetalert.min.js"></script>
