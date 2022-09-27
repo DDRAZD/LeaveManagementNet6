@@ -122,3 +122,30 @@ as this is expected in the layout page in :
 also, in the layout page, add the script globaly using: ORDER MATTERS; add it after sourcing bootsrrap and jquery; any 3rd party library should come
 after the bootstrap and jquery BUT BEFORE your site.js
 <script src="~/lib/sweetalert/sweetalert.min.js"></script>
+
+-----------------------------------------------
+adding beautified data tables: https://datatables.net/
+https://datatables.net/examples/styling/bootstrap5.html
+
+in the layout page, include the needed files AFTER the jquery and the bootstrap
+https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js
+https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js
+
+and in the meta:
+https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css
+
+------------------
+font awesome for icons
+https://fontawesome.com/
+you can browse the different icons in the exmaples and know what to include in your code
+
+right click on project and manage client side libraries (add client side library)
+font-awesome (notice the "-")
+
+after instalation, have to add it to the layout file
+<link rel="stylesheet" href="~/lib/font-awesome/css/all.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.css" asp-append-version="true" />
+
+adding icons can be done with <i></i> tags
+
+<i class="fas fa-pencil-alt"></i>
