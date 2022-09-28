@@ -149,3 +149,34 @@ after instalation, have to add it to the layout file
 adding icons can be done with <i></i> tags
 
 <i class="fas fa-pencil-alt"></i>
+
+------------------------------------------
+<T> allows you to use generics. Not knowing in advance which type would be used. This is useful when building the generic interfaces 
+when implementing the repository pattern
+" public interface IGenericRepository<T> where T : class"
+"Task" are relative to C# asynchornous programming
+
+when inherting the interface, you need again to specify what T is:
+public class GenericRepository<T>:IGenericRepository<T> where T : class
+
+Asynchronous tasks are built for more efficiency and performance - hence use them when interacting with the db (context.AddAsync(entity);)
+when you are doing Async, you need to await -> add that clause
+
+await context.AddAsync(entity);
+await context.SaveChangesAsync();
+
+when you dont know which table it is going to be, you use context.Set<T>() to get to the right table
+
+to update a data base, while not knowing which table it is, you do:
+context.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
+entity state is set when we call a method - > EF changes the entity state to the entity; os when we do add, state changes "this might be addition", state 
+changed to "addition", so when we do save changes it knows what to do
+same for all the rest
+for update, we need to tell it that it is a modification (as the update is done outside of the repository so state was not defined as changed), so we change it
+with this code:
+context.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
+another option is simply to use
+context.Update(entity); instead
+
