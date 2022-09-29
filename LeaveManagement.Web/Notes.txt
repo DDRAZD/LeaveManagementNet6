@@ -180,3 +180,23 @@ context.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified
 another option is simply to use
 context.Update(entity); instead
 
+----------------------------
+custom repository
+done when you need specific operations beyond CRUD -> you dont want to do it in the controller for proper patterns
+
+after adding repositories, need to register them in program.cs
+every time you see IGenericRepository, swap it at run time (dependancy injection) with GenericRepostiory:
+
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
+the difference in syntax is driven by knowing which class you are using in one (leavetype here there is no "T") vs. not knowing (generic is T)
+
+AddScoped = adding an instance and removing the instance once done
+AddTransient = keep adding new instances (for example, needing multiple connections to multiple clients)
+AddSingelton - add only one -> for example, when creating log files, can only have one 
+
+Those are the 3 ways to add dependancy injection 
+
+this is similar to the Unity.Config file from MVC 5 in which we registered the dependnacy injection-> in .Net Core it is done in Program.cs like above
+
+
