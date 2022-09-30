@@ -200,3 +200,10 @@ Those are the 3 ways to add dependancy injection
 this is similar to the Unity.Config file from MVC 5 in which we registered the dependnacy injection-> in .Net Core it is done in Program.cs like above
 
 
+------------------------------------------
+working with identity
+
+the check box of:"use individual accounts" that we used at set up of the .Net Core created an identity area but hidden
+To edit, go to the Areas, right click "add"-> "new scaffolding item", "identity"; select the files you want to scaffold (login? registration? email confirm? etc)
+you will have to pick a class (dbcontext)
+if you get an error, it is because you need updates to nuget packages (the identity one are out of date) - go to the projec itself, nuget packages, and check for updates
