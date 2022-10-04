@@ -220,3 +220,115 @@ if you have external logins (loign with google, fb etc.) it will also be called 
 onpost happens when you submit the form
 returnUrl ??= Url.Content("~/"); (retreave the return URL, and if there was non, set it as home page)->it is a security feature to avoid hijacking the page in registration
 
+
+----------------
+to edit and see the login page coming from .net core, you again need to scaffold it
+go to Areas
+Add scafolding (in identity)
+select the login page
+
+in  C# class we injcet in the constructor
+in a razor view, we inject like so (taken from the loginpartial)
+@inject SignInManager<Employee> SignInManager
+@inject UserManager<Employee> UserManager
+
+
+In the loginPartial, you can see use of the key word "User"-> this is part of .Net Core; user is an object that retains the user details across session
+similar to the manually set Session["CurrentUser"] you had in .Net MVC5
+
+--------------
+make sure all your buttons are using forms - this allows the built in anti forgery token to be included; notice that this is how buttons are also implemented
+out of the box in .Net Core (example, the logout button in the login partial):
+
+<form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button  type="submit" class="nav-link btn btn-link text-white">Logout</button>
+ </form> 
+
+ razor pages have the AntiForgeryToken BUILT in to the the OnPost -> while you need to put the annotation [AntiForgeryToken] before methods, you do not need to do
+ it for razor pages as it is "implied"
+
+
+ ---------------------------------
+ adding roles
+
+ in program.cs, add to the builder of identity:
+
+ .AddRoles<IdentityRole>()
+
+ builder.Services.AddDefaultIdentity<Employee>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+it is possible to extend the identity, similary to how we added fields to Employee in addition to what the system had for identity
+
+Then you need to seed the roles
+
+do so in DbContext
+protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new RoleSeedConfiguration());
+        }
+
+        the roles seed config is a new class (can be any name) that you will build - jus add a class in the Data layer:
+
+
+         public class RoleSeedConfiguration : IEntityTypeConfiguration<IdentityRole>
+    {
+        public void Configure(EntityTypeBuilder<IdentityRole> builder)
+        {
+            builder.HasData(
+                new IdentityRole
+                {
+                    Id = "0e496d22-f74d-4bd4-9be2-f3b0436f29ed",
+                    Name = "Administrator",
+                    NormalizedName = "ADMINISTRATOR"
+                },
+                new IdentityRole
+                {
+                    Id = "82f7772a-888a-418b-b6ae-340d98f3e40b",
+                    Name = "User",
+                    NormalizedName = "USER"
+                }
+                
+                );
+        }
+    }
+
+    easiest way to impmenet is just use quick actions when you write the class name and VS will inffer the using statmetns and structure
+
+    The roles IDs were picked from exsiting IDs in the DB; can be any hexa string
+
+    also worthwhile organizing the configuration class in the configuration folder
+
+-----
+seeding some users
+again, like roles, in the dbcontext add:
+
+ builder.ApplyConfiguration(new UserSeedConfiguration());//seeding some users
+
+ implement the UserSconfiguration class (quick actions add new file)
+
+ 
+namespace LeaveManagement.Web.Configuration
+{
+    public class UserSeedConfiguration : IEntityTypeConfiguration<Employee>
+    {
+        public void Configure(EntityTypeBuilder<Employee> builder)
+        {
+         var hasher = new PasswordHasher<Employee>();
+            builder.HasData(
+                new Employee
+                {
+                    Id = "82f7a62a-832a-418b-b6ae-340d98f3e40b",
+                    Email= "admin2@test.com",
+                    NormalizedEmail= "ADMIN2@TEST.COM",
+                    FirstName ="System",
+                    LastName="Admin",
+                    PasswordHash = hasher.HashPassword(null, "Admin12345!")
+
+                }
+
+                );
+        }
+    }
