@@ -1,4 +1,4 @@
-﻿using LeaveManagement.Web.Configuration;
+﻿using LeaveManagement.Web.Configuration.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +16,7 @@ namespace LeaveManagement.Web.Data
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new RoleSeedConfiguration());//seeding roles
             builder.ApplyConfiguration(new UserSeedConfiguration());//seeding some users
+            builder.ApplyConfiguration(new UserRolesSeedConfiguration());//assigning the users to role
         }
 
         public DbSet<LeaveType> LeaveTypes { get; set; }

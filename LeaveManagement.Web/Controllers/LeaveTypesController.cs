@@ -9,9 +9,11 @@ using LeaveManagement.Web.Data;
 using LeaveManagement.Web.Models;
 using AutoMapper;
 using LeaveManagement.Web.Contracts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LeaveManagement.Web.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class LeaveTypesController : Controller
     {
      //   private readonly ApplicationDbContext _context;
@@ -63,6 +65,7 @@ namespace LeaveManagement.Web.Controllers
         }
 
         // GET: LeaveTypes/Create
+        
         public IActionResult Create()
         {
             return View();
@@ -73,6 +76,7 @@ namespace LeaveManagement.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+       
         public async Task<IActionResult> Create(LeaveTypeVM leaveTypeVM)
         {
             if (ModelState.IsValid)
@@ -89,6 +93,7 @@ namespace LeaveManagement.Web.Controllers
         }
 
         // GET: LeaveTypes/Edit/5
+       
         public async Task<IActionResult> Edit(int? id)
         {
             var leaveType = await this.leaveTypeRepositiry.GetAsync(id);
@@ -105,6 +110,7 @@ namespace LeaveManagement.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+       
         public async Task<IActionResult> Edit(int id,  LeaveTypeVM leaveTypeVM)
         {
             if (id != leaveTypeVM.Id) //this is a fail safe - the ID already exists in leaveTypeVM but if someone hijacked the session, this can be manipulated with
@@ -144,6 +150,7 @@ namespace LeaveManagement.Web.Controllers
         // POST: LeaveTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+       
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
            
