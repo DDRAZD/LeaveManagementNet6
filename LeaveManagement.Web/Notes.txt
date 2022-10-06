@@ -362,3 +362,9 @@ all these seeding constitute a change to the DB, thus, we need a migration:
 add-migration AddedDefaultUsersAndRoles (in package manager console)
 and then
 update-database
+
+----------------------------------------
+to avoid spelling error in manually typed words ("Admin", "user" etc) use a constants class: 
+1) new folder for constants
+2) add a class (i added Roles.cs) with the sole purpose of having the words
+3) as you not instanciate this class, make it a static -> it works for you like "global variables" in C++
