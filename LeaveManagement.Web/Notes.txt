@@ -180,6 +180,12 @@ context.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified
 another option is simply to use
 context.Update(entity); instead
 
+---------------------
+to handle nullable and avoid registration form enforcement even when you dont put "required", allow nullable in inputmodel with "?"
+also, add in the OnPostAsync direct assignment to default for the case the properties are actually null:
+user.DateJoined = Input.DateJoined ?? default;
+user.DateOfBirth = Input.DateOfBirth ?? default;
+
 ----------------------------
 custom repository
 done when you need specific operations beyond CRUD -> you dont want to do it in the controller for proper patterns
@@ -368,3 +374,55 @@ to avoid spelling error in manually typed words ("Admin", "user" etc) use a cons
 1) new folder for constants
 2) add a class (i added Roles.cs) with the sole purpose of having the words
 3) as you not instanciate this class, make it a static -> it works for you like "global variables" in C++
+
+-------------------------------------
+email services 
+
+You can use for testing: papercut smtp
+
+in program.cs you have to configure it and you do so by using builder again and adding the service:
+builder.Services.AddTransient<IEmailSender>(s=> new EmailSenderMe("localhost", 25,"no-reply@leavemanagement.com");
+
+25 is the default port for papercut
+the "no-reply..." is the address you want the "from" to be with
+papercut is coming from local host
+
+the EmailSenderMe is a name i have given and this service needs to be defined (implemented)-> add a folder for services
+
+ public class EmailSenderMe : IEmailSender
+    {
+        private string smtpServer;
+        private int smtPort;
+        private string fromEmailAddress;
+
+        public EmailSenderMe(string smtpServer, int smtPort, string fromEmailAddress)
+        {
+            this.smtpServer = smtpServer;
+            this.smtPort = smtPort;
+            this.fromEmailAddress = fromEmailAddress;
+        }
+
+        public Task SendEmailAsync(string email, string subject, string htmlMessage)
+        {
+            //building an email messgage:
+
+            var message = new MailMessage
+            {
+                From = new MailAddress(fromEmailAddress),
+                Subject = subject,
+                Body = htmlMessage,
+                IsBodyHtml = true
+            };
+
+            message.To.Add(new MailAddress(email));//adding the recepuent address
+
+            //connecting to the server (because we define in program.cs "add.transient" this will happen each time and be closed after
+            var client = new SmtpClient(smtpServer, smtPort);            
+            client.Send(message);
+
+            return Task.CompletedTask;
+            
+        }
+    }
+
+    end of scaffolding for identity, authentication, repository work
