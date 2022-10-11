@@ -16,6 +16,8 @@ namespace LeaveManagement.Web.Data
 
         public string EmployeeId { get; set; }
 
+        public int Period { get; set; } //will mark the year in which employee got the leave at
+
        
 
     }
