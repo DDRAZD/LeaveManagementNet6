@@ -1,1 +1,15 @@
-﻿
+﻿when creating a repositoty that needs to access the built in user functions, you can use dependancy injection to 
+add the user manager to the repository:
+
+ private readonly UserManager<Employee> userManager;
+
+        public LeaveAllocationRepository(ApplicationDbContext context, UserManager<Employee> userManager): base(context)
+        {
+            this.userManager = userManager;
+        }
+
+so in addition to providing the dbContext, you are also injecting the user manager. 
+
+This allows you to interact with the user DB in the different tasks of the repository - for example, getting all the users in a specific role:
+ //get all employees in range so we can allocate them the leave:
+var employees = await userManager.GetUsersInRoleAsync(Roles.User);
