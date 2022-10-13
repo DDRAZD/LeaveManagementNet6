@@ -20,13 +20,15 @@ namespace LeaveManagement.Web.Controllers
      //   private readonly ApplicationDbContext _context;
         private readonly IMapper mapper;
         private readonly ILeaveTypeRepository leaveTypeRepositiry;
+        private readonly ILeaveAllocationRepository leaveAllocationRepository;
 
         //constructor with dependancy injection - the program.cs has in Services already the injection defined (again, no UnityConfig in DotNet Core)
-        public LeaveTypesController(IMapper mapper, ILeaveTypeRepository leaveTypeRepositiry)
+        public LeaveTypesController(IMapper mapper, ILeaveTypeRepository leaveTypeRepositiry, ILeaveAllocationRepository leaveAllocationRepository)
         {
             //_context = context;
             this.mapper = mapper;
             this.leaveTypeRepositiry = leaveTypeRepositiry;
+            this.leaveAllocationRepository = leaveAllocationRepository;
         }
 
         // GET: LeaveTypes
@@ -166,7 +168,9 @@ namespace LeaveManagement.Web.Controllers
         public async Task<IActionResult> AllocateLeave (int id)
         {
            
-            throw new NotImplementedException();
+            await leaveAllocationRepository.LeaveAllocation(id);
+            return RedirectToAction(nameof(Index));
+
         }
 
 
