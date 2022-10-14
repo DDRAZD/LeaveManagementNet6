@@ -50,7 +50,7 @@
 
 
 <form id="allocationForm" asp-action="AllocateLeave">
-        <input type="hidden" id="leaveTypeId" name="Id" />
+        <input type="hidden" id="leaveTypeIdAllocation" name="Id" />
        
 </form>
 
@@ -85,7 +85,7 @@
                     if(confirm){
                        var btn =$(this);//get the button, whichever button triggered it
                        var id = btn.data("id");//gets the actual id value from the button; this is coming from "data-id="
-                       $('#leaveTypeId').val(id);//the leaveTypeId is part of the form - we are assigning it as a variable with the value of the id
+                       $('#leaveTypeIdAllocation').val(id);//the leaveTypeId is part of the form - we are assigning it as a variable with the value of the id
                        $('#allocationForm').submit();
                     }
                 });
