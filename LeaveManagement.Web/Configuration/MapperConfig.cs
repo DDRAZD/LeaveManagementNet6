@@ -10,8 +10,9 @@ namespace LeaveManagement.Web.Configuration
         public MapperConfig()
         {
             CreateMap<LeaveType, LeaveTypeVM>().ReverseMap(); //allows conversion from model to view model (from data to UI) while "ReverseMap" adds
-            //..the reverse conversion from VM back to Data model
-            
+                                                              //..the reverse conversion from VM back to Data model
+
+            CreateMap<Employee,EmployeeListVM >().ReverseMap();
         }
     }
 }

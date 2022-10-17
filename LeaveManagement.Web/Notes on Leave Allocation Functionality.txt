@@ -13,3 +13,30 @@ so in addition to providing the dbContext, you are also injecting the user manag
 This allows you to interact with the user DB in the different tasks of the repository - for example, getting all the users in a specific role:
  //get all employees in range so we can allocate them the leave:
 var employees = await userManager.GetUsersInRoleAsync(Roles.User);
+
+-------------------------------
+adding a controller: add with read/write functions so to get all the code ready (you wont get views with it)
+
+---------------------
+when using async tasks, use Task<IActionResult> and not Task<ActionResult> (use the interface and not the class), as IActionResult is extended and 
+will be preferable in .Net Core
+
+------------------------
+as usual, you do not want to use the data model in the controller or any where in the view. it has to be a view model. 
+
+you can have a view model per purpose as opposed to one view model to all. Similar to how you built in MVC 5 vm for register, vm for login etc
+Think of the purpose (page) you are building, and generate a view model for that one
+In this case, EmployeeListVM vs. just EmployeeVM
+-----------------------
+when adding a view, the IDE does not know how to properly tightly bind the view to the VM and is looking for a data structure in the DB Context
+if you add a view with the help of the IDE, asking it to create a view with model it will also add in your DB Context another DbSet and will 
+change you DB in the next migration -> you have to delete it after it was generated:
+delete this: public DbSet<LeaveManagement.Web.Models.EmployeeListVM> EmployeeListVM { get; set; }
+
+because Employee is an identity class, you wont even have the option of selecting it in the model when adding the view, so you have to select the VM
+and that will manipulate your DB context that you have to manually fix
+--------------
+for any controller, you need an Index action; not IndexAsync not any other name, index and thats it. Otherwise, you will end up with 404 errors and wont 
+know why
+
+
