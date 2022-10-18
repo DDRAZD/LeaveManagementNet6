@@ -13,6 +13,11 @@ namespace LeaveManagement.Web.Configuration
                                                               //..the reverse conversion from VM back to Data model
 
             CreateMap<Employee,EmployeeListVM >().ReverseMap();
+            CreateMap<Employee, EmployeeAllocationVM>().ReverseMap();
+
+            CreateMap<LeaveAllocation, LeaveAllocationVM>().ReverseMap();
+
+
         }
     }
 }

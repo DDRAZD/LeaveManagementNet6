@@ -39,4 +39,15 @@ and that will manipulate your DB context that you have to manually fix
 for any controller, you need an Index action; not IndexAsync not any other name, index and thats it. Otherwise, you will end up with 404 errors and wont 
 know why
 
+----------------------
+it is not a bad pattern to manipulate VMs within the repository - this reduces the inteligence in the controller; repository may in fact both deal with 
+data model and with view model
+in essence, as the repository is the only place you can "safely" talk with the DB via contxet, it is in your best interest to drive the complexity there
+-----------------------
+when you pull from DB and want to leverage another table using the foreign key, you do this:
+var allocations = await context.LeaveAllocations
+                .Include(a => a.LeaveType)
+                .Where(y=>y.EmployeeId==employeeId).ToListAsync();
+
+you are essentially doing an inner-join with the word "include"-> this pulls in from the LeaveType table the leave types to the same var
 
