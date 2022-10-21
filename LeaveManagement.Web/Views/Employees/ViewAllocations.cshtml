@@ -37,6 +37,26 @@
         
     </dl>
 </div>
+<hr/>
+
+<div class="card">
+  <div class="card-header">
+    <h4>Leave Allocations</h4>
+  </div>
+  <ul class="list-group list-group-flush">
+   @foreach(var allocation in Model.LeaveAllocations)
+        {
+             <li class="list-group-item">
+                 <h6>@allocation.LeaveType.Name
+                     <span class="badge rounded-pill bg-primary"> Number of Days @allocation.NumberOfDays</span>
+                     <span class="badge rounded-pill bg-success"> Remaining days @allocation.LeaveType.DefaultDays</span>
+                     </h6>
+             </li>
+
+        }
+    </ul>
+</div>
+<br />
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
