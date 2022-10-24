@@ -60,16 +60,26 @@ namespace LeaveManagement.Web.Controllers
             }
         }
 
-        // GET: EmployeesController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: EmployeesController/EditAllocation/5
+        public async Task<ActionResult> EditAllocation(int id)
         {
-            return View();
+            var allocation = await this.leaveAllocationRepository.GetAsync(id);
+            if (allocation == null)
+            {
+                return NotFound();
+            }
+            var model = mapper.Map<LeaveAllocationEditVM>(allocation);
+
+            model.Employee = mapper.Map<EmployeeListVM>(await userManager.FindByIdAsync(allocation.EmployeeId));
+
+            return View(model);
+            
         }
 
-        // POST: EmployeesController/Edit/5
+        // POST: EmployeesController/EditAllocation/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult EditAllocation(int id, IFormCollection collection)
         {
             try
             {
