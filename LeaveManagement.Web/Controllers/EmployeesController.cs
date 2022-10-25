@@ -34,7 +34,7 @@ namespace LeaveManagement.Web.Controllers
         // GET: EmployeesController/ViewAllocations/employeedId
         public async Task<IActionResult> ViewAllocations(string id)
         {
-           var model =  await leaveAllocationRepository.GetEmployeeAllocation(id);
+           var model =  await leaveAllocationRepository.GetEmployeeAllocations(id);
             
             return View(model);
         }
@@ -63,14 +63,14 @@ namespace LeaveManagement.Web.Controllers
         // GET: EmployeesController/EditAllocation/5
         public async Task<ActionResult> EditAllocation(int id)
         {
-            var allocation = await this.leaveAllocationRepository.GetAsync(id);
-            if (allocation == null)
+            var model = await this.leaveAllocationRepository.GetEmployeeAllocation(id);
+            if (model == null)
             {
                 return NotFound();
             }
-            var model = mapper.Map<LeaveAllocationEditVM>(allocation);
+           // var model = mapper.Map<LeaveAllocationEditVM>(allocation);
 
-            model.Employee = mapper.Map<EmployeeListVM>(await userManager.FindByIdAsync(allocation.EmployeeId));
+           // model.Employee = mapper.Map<EmployeeListVM>(await userManager.FindByIdAsync(allocation.EmployeeId));
 
             return View(model);
             

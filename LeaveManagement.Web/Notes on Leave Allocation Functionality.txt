@@ -51,3 +51,10 @@ var allocations = await context.LeaveAllocations
 
 you are essentially doing an inner-join with the word "include"-> this pulls in from the LeaveType table the leave types to the same var
 
+-------------------------------
+
+when mapping relational items into VM, you map each item separately. For example, if allocations had a foreign key towards employees, you will map allocations to allocationsVM, and then set an employeeVM to map to employee; it is like building represenation of the db in the VM
+--------------------------
+
+
+
