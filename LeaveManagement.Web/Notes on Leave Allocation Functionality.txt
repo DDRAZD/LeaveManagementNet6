@@ -49,6 +49,15 @@ var allocations = await context.LeaveAllocations
                 .Include(a => a.LeaveType)
                 .Where(y=>y.EmployeeId==employeeId).ToListAsync();
 
+                ------------------
+
+common error with model state, leaving the properties non-nullable; then model state fails as says there is a null. make sure to add to the ties between the Viewmodels nullable.
+
+I.e.:
+public EmployeeListVM? Employee { get; set; }
+
+as model state might fail on form submission without the "?" as thinks null is not allowed
+
 you are essentially doing an inner-join with the word "include"-> this pulls in from the LeaveType table the leave types to the same var
 
 -------------------------------

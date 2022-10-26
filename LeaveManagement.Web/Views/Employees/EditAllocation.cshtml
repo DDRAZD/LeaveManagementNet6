@@ -9,20 +9,24 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="EditAllocationAsync">
+    <div class="col-md-12">
+        <form asp-action="EditAllocation">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="EmployeeId" />
+            <input type="hidden" asp-for="LeaveTypeId" />
             <div class="form-group">
                 <label asp-for="NumberOfDays" class="control-label"></label>
                 <input asp-for="NumberOfDays" class="form-control" />
                 <span asp-validation-for="NumberOfDays" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <label asp-for="Period" class="control-label"></label>
                 <input asp-for="Period" class="form-control" />
                 <span asp-validation-for="Period" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
