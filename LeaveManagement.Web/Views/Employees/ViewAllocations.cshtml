@@ -44,22 +44,33 @@
     <h4>Leave Allocations</h4>
   </div>
   <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+          <div class="row">
+              <div class="col">Leave Name</div>
+              <div class="col">Original allocation</div>
+              <div class="col">Current allocation</div>
+              <div class="col">Action</div>
+          </div>
+
+      </li>
    @foreach(var allocation in Model.LeaveAllocations)
         {
-             <li class="list-group-item">
-                 <h6>@allocation.LeaveType.Name
-                     <span class="badge rounded-pill bg-primary"> Number of Days @allocation.NumberOfDays</span>
-                     <span class="badge rounded-pill bg-success"> Remaining days @allocation.LeaveType.DefaultDays</span>
-                     <a class="btn btn-warning" asp-action="EditAllocation" asp-route-id="@allocation.Id"><i class="fas fa-pencil-alt"></i>Edit Allocation</a>
-                     </h6>
-                     
-             </li>
+            <li class="list-group-item">
+
+                <div class="row">
+                    <div class="col"><h6>@allocation.LeaveType.Name</h6></div>
+                    <div class="col"> <span class="badge rounded-pill bg-primary"> Number of Days @allocation.NumberOfDays</span></div>
+                    <div class="col"><span class="badge rounded-pill bg-success"> Remaining days @allocation.LeaveType.DefaultDays</span></div>
+                    <div class="col"><a class="btn btn-warning" asp-action="EditAllocation" asp-route-id="@allocation.Id"><i class="fas fa-pencil-alt"></i>Edit Allocation</a></div>
+                </div>
+
+            </li>
 
         }
     </ul>
 </div>
-<br />
+
 <div>
     
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-dark">Back to list</a> &nbsp;
 </div>
