@@ -75,6 +75,20 @@ adding
      to the layout page, will call the script for the specialized data tables any place you used the class "table" and allow all tables to be same format
 
 -------------------
+Drop down list - instanciate a SelectList
+ViewData["LeaveTypeId"] = new SelectList(_context.LeaveTypes, "Id", "Name");
+
+the first parameter is the query to get the list
+Second one is which value to use to organize
+third one is what to display
+
+it will be within the <select> tag like so:
+<option value = "[first id value]"> [corresponding name to that id]</option>
+<option value = "[second id value]"> [corresponding name to that id]</option>
+.....
+
+
+------------------------------------------------------
 
 
 

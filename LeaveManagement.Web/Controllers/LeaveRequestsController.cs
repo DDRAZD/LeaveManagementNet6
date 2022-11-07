@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LeaveManagement.Web.Data;
+using LeaveManagement.Web.Models;
 
 namespace LeaveManagement.Web.Controllers
 {
@@ -47,8 +48,13 @@ namespace LeaveManagement.Web.Controllers
         // GET: LeaveRequests/Create
         public IActionResult Create()
         {
-            ViewData["LeaveTypeId"] = new SelectList(_context.LeaveTypes, "Id", "Id");
-            return View();
+            var model = new LeaveRequestCreateVM();
+            model.LeaveTypes = new SelectList(_context.LeaveTypes, "Id", "Name");
+            model.StartDate = DateTime.Now;
+            model.EndDate = DateTime.Now;
+            
+            //ViewData["LeaveTypeId"] = new SelectList(_context.LeaveTypes, "Id", "Name");
+            return View(model);
         }
 
         // POST: LeaveRequests/Create
@@ -64,7 +70,7 @@ namespace LeaveManagement.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LeaveTypeId"] = new SelectList(_context.LeaveTypes, "Id", "Id", leaveRequest.LeaveTypeId);
+            ViewData["LeaveTypeId"] = new SelectList(_context.LeaveTypes, "Id", "Name", leaveRequest.LeaveTypeId);
             return View(leaveRequest);
         }
 
