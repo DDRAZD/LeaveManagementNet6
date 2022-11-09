@@ -89,7 +89,19 @@ it will be within the <select> tag like so:
 
 
 ------------------------------------------------------
+addin a js library for date picker
+https://jqueryui.com/datepicker/
+go to project level - add-> client side library->search for jqueryUI
 
+on https://jqueryui.com/datepicker/ you can "view source" and see what it takes to run this library
+ <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> add this to the layout as usual so you can use it everywhere
+ add to the layout where you have already a $(function) sciprt:
+ $( "#datepicker" ).datepicker();
+ to avoid two "id"s with same name, you should add it as a class so:
+ $( ".datepicker" ).datepicker(); (not # but .)
 
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"> add to the layout to the top where style sheet goes
+
+ make sure in the input forms to use type="text" when handling datepicker
 
 

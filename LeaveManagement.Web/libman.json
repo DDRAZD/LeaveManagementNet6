@@ -1,16 +1,18 @@
 {
   "version": "1.0",
   "defaultProvider": "cdnjs",
-  "libraries": [{
-  "provider": "cdnjs",
-  "library": "sweetalert@2.1.2",
-  "destination": "wwwroot/lib/sweetalert/"
-}
-,
-{
-  "provider": "cdnjs",
-  "library": "font-awesome@6.2.0",
-  "destination": "wwwroot/lib/font-awesome/"
-}
-]
+  "libraries": [
+    {
+      "library": "sweetalert@2.1.2",
+      "destination": "wwwroot/lib/sweetalert/"
+    },
+    {
+      "library": "font-awesome@6.2.0",
+      "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "jqueryui@1.13.2",
+      "destination": "wwwroot/lib/jqueryui/"
+    }
+  ]
 }
