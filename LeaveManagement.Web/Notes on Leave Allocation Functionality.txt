@@ -103,5 +103,12 @@ on https://jqueryui.com/datepicker/ you can "view source" and see what it takes 
  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"> add to the layout to the top where style sheet goes
 
  make sure in the input forms to use type="text" when handling datepicker
+ ----------------------
+
+ adding this to program.cs: builder.Services.AddHttpContextAccessor(); allows you access to the Http context within repostitoy (i.e. beyond the controller but in the entire application). This is useful for obtaning the user id outside of the controller
+ then inject this in the repository:
+
+ IHttpContextAccessor httpContextAccessor
+ you will also need the unser manager
 
 

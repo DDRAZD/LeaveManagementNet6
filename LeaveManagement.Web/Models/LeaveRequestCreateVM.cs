@@ -15,12 +15,12 @@ namespace LeaveManagement.Web.Models
         [Display(Name ="Leave Types")]
         [Required]
         public int LeaveTypeId { get; set; } //useful for dropdown list
-        public SelectList LeaveTypes { get; set; } //for the drop down list
+        public SelectList? LeaveTypes { get; set; } //for the drop down list
 
       //  public DateTime DateRequested { get; set; }
 
         [Display(Name ="Comments")]
-        public string RequestComments { get; set; }
+        public string? RequestComments { get; set; }
 
       //  public string RequestingEmployeeId { get; set; }
 
