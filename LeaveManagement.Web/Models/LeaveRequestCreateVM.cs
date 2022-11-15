@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LeaveManagement.Web.Models
 {
-    public class LeaveRequestCreateVM
+    public class LeaveRequestCreateVM:IValidatableObject
     {
         [Display(Name ="Leave Start Date")]
         [Required]
@@ -20,12 +20,29 @@ namespace LeaveManagement.Web.Models
       //  public DateTime DateRequested { get; set; }
 
         [Display(Name ="Comments")]
+       
         public string? RequestComments { get; set; }
 
-      //  public string RequestingEmployeeId { get; set; }
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if(StartDate > EndDate)
+            {
+                yield return new ValidationResult("the start date cannot be after end date",new[] {nameof(StartDate), nameof(EndDate)});
+            }
+            if(RequestComments != null)
+            {
+                if (RequestComments.Length > 159)
+                {
+                    yield return new ValidationResult("comment too long", new[] { nameof(RequestComments) });
+                }
+            }
+            
+        }
+
+        //  public string RequestingEmployeeId { get; set; }
 
         //public bool? Approved { get; set; }
 
-      //  public bool Cancelled { get; set; }
+        //  public bool Cancelled { get; set; }
     }
 }

@@ -9,9 +9,12 @@ using LeaveManagement.Web.Data;
 using LeaveManagement.Web.Models;
 using AutoMapper;
 using LeaveManagement.Web.Contracts;
+using Microsoft.AspNetCore.Authorization;
+using LeaveManagement.Web.Constants;
 
 namespace LeaveManagement.Web.Controllers
 {
+    [Authorize]
     public class LeaveRequestsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -56,8 +59,8 @@ namespace LeaveManagement.Web.Controllers
         {
             var model = new LeaveRequestCreateVM();
             model.LeaveTypes = new SelectList(_context.LeaveTypes, "Id", "Name");
-            model.StartDate = DateTime.Now;
-            model.EndDate = DateTime.Now;
+         //   model.StartDate = DateTime.Now;
+          //  model.EndDate = DateTime.Now;
             
             //ViewData["LeaveTypeId"] = new SelectList(_context.LeaveTypes, "Id", "Name");
             return View(model);

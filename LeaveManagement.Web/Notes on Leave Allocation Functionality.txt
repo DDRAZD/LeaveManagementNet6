@@ -112,3 +112,10 @@ on https://jqueryui.com/datepicker/ you can "view source" and see what it takes 
  you will also need the unser manager
 
 
+ --------------------------
+ in view model, you can inherit from IValidatableObject and then you can actually validate things like End Date is After Start Date if 
+ you have dates in the fields as an example - simply allows you to add logic around it
+
+ yield return new ValidationResult("the start date cannot be after end date",new[] {nameof(StartDate), nameof(EndDate)});
+ "yield" allows you to return mulitple things - basically it is "stop here, return and then come back to continue"
+
