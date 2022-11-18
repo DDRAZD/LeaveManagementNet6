@@ -87,7 +87,7 @@ namespace LeaveManagement.Web.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(String.Empty, "an error has occored");
+                ModelState.AddModelError(String.Empty, "an error has occored in the leave request controller as an exception");
             }
             //this is in case we need to reload - the list is not tracked in the form so need to load it
             model.LeaveTypes = new SelectList(_context.LeaveTypes, "Id", "Name", model.LeaveTypeId);

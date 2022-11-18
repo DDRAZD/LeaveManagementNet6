@@ -14,7 +14,7 @@ namespace LeaveManagement.Web.Data
 
         public DateTime DateRequested { get; set; }
 
-        public string RequestComments { get; set; }
+        public string? RequestComments { get; set; }
 
         public string RequestingEmployeeId { get; set; }
 
