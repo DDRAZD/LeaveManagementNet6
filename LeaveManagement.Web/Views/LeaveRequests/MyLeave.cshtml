@@ -1,11 +1,101 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model IEnumerable<LeaveManagement.Web.Models.EmployeeLeaveRequestViewVM>
+﻿
+@model EmployeeLeaveRequestViewVM
 
     
 @{
     ViewData["Title"] = "My Leave";
 }
+
+
+
+<div class="card">
+  <div class="card-header">
+    <h4>Leave Allocations</h4>
+  </div>
+  <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+          <div class="row">
+              <div class="col">Leave Name</div>
+              <div class="col">Original allocation</div>
+              <div class="col">Current allocation</div>
+              
+          </div>
+
+      </li>
+   @foreach(var allocation in Model.LeavLeaveAllocations)
+        {
+            
+            <li class="list-group-item">
+
+                <div class="row">
+                    <div class="col"><h6>@allocation.LeaveType.Name</h6></div>
+                    <div class="col"> <span class="badge rounded-pill bg-primary"> Number of Days @allocation.NumberOfDays</span></div>
+                    <div class="col"><span class="badge rounded-pill bg-success"> Remaining days @allocation.LeaveType.DefaultDays</span></div>
+                    
+                </div>
+
+            </li>
+
+        }
+    </ul>
+</div>
+
+<hr/>
+
+<h2>Current Requests</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveRequests[0].StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveRequests[0].EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveRequests[0].LeaveType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveRequests[0].DateRequested)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveRequests[0].Approved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveRequests[0].Cancelled)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.LeaveRequests) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeaveType.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateRequested)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestComments)
+            </td>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.Approved)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cancelled)
+            </td>
+           
+        </tr>
+}
+    </tbody>
+</table>
