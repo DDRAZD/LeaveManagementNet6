@@ -62,9 +62,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.LeaveRequests[0].Approved)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LeaveRequests[0].Cancelled)
-            </th>
+           
             
             <th></th>
         </tr>
@@ -79,21 +77,41 @@
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LeaveType.Id)
+                @Html.DisplayFor(modelItem => item.LeaveType.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateRequested)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestComments)
-            </td>
+           
            
             <td>
-                @Html.DisplayFor(modelItem => item.Approved)
+                    @if (item.Cancelled == true)
+                    {
+                        <span class="badge rounded-pill bg-secondary"> Canceled</span>
+
+                    }
+                    else if (item.Approved == null)
+                    {
+                        <span class="badge rounded-pill bg-warning"> Pending</span>
+                    }
+                    else if (item.Approved.Value)
+                    {
+                        <span class="badge rounded-pill bg-success"> Approved</span>
+                    }
+                    else if (item.Approved.Value == false)
+                    {
+                        <span class="badge rounded-pill bg-danger"> Rejected</span>
+                    }
+                    
             </td>
+           
+
             <td>
-                @Html.DisplayFor(modelItem => item.Cancelled)
+                 <a asp-action="Cancel" class="btn btn-danger btn-sm" asp-route-id="@item.Id">Cancel Request</a> 
+
             </td>
+
+            
            
         </tr>
 }
