@@ -103,5 +103,18 @@ namespace LeaveManagement.Web.Repositories
             await this.UpdateAsync(leaveAllocation);
             return true;
         }
+
+        public async Task<LeaveAllocation> GetEmployeeAllocation(string employeeId, int Id)
+        {
+            var allocations = await context.LeaveAllocations
+               .Include(a => a.LeaveType).Where(y => y.EmployeeId == employeeId).ToListAsync(); //gets all types of allocations for the employee (sick, vacation etc)
+
+
+            
+
+            
+            var allocation =  allocations.FirstOrDefault(y=>y.LeaveTypeId==Id); //pulls the specfic allocation (such as allocation to sick leave)
+            return allocation;
+        }
     }
 }

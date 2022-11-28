@@ -51,9 +51,7 @@ namespace LeaveManagement.Web.Controllers
             {
                 return NotFound();
             }
-           // var model = mapper.Map<LeaveAllocationEditVM>(allocation);
-
-           // model.Employee = mapper.Map<EmployeeListVM>(await userManager.FindByIdAsync(allocation.EmployeeId));
+         
 
             return View(model);
             

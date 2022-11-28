@@ -28,11 +28,15 @@ namespace LeaveManagement.Web.Controllers
             this.leaveRequestRepository = leaveRequestRepository;
         }
 
+
+        [Authorize(Roles =Roles.Administrator)]
         // GET: LeaveRequests
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.LeaveRequests.Include(l => l.LeaveType);
-            return View(await applicationDbContext.ToListAsync());
+           var model = await this.leaveRequestRepository.GetAdminLeaveRequestList();
+           return View(model);
+            //var applicationDbContext = _context.LeaveRequests.Include(l => l.LeaveType);
+          //  return View(await applicationDbContext.ToListAsync());
         }
 
 

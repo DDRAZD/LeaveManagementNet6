@@ -24,6 +24,29 @@ namespace LeaveManagement.Web.Repositories
             this.userManager = userManager;
         }
 
+        /// <summary>
+        /// updates the allocation - after you approve a leave, the allocation has to drop as you used it
+        /// </summary>
+        /// <param name="leaveRequestId"></param>
+        /// <param name="approved"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task ChangeApprovalStatus(int leaveRequestId, bool approved)
+        {
+            var leaveRequest = await GetAsync(leaveRequestId);
+            leaveRequest.Approved = approved;//approve the request
+
+            if(approved ==true)
+            {
+                var allocation = await leaveAllocationRepository.GetEmployeeAllocation(leaveRequest.RequestingEmployeeId, leaveRequestId);
+                int daysRequested = (int)(leaveRequest.EndDate - leaveRequest.StartDate).TotalDays;
+                allocation.NumberOfDays = daysRequested;
+
+                await leaveAllocationRepository.UpdateAsync(allocation);
+            }
+            await UpdateAsync(leaveRequest);
+        }
+
         public async Task CreateLeaveRequest(LeaveRequestCreateVM model)
         {
             var user = await userManager.GetUserAsync(httpContextAccessor?.HttpContext?.User);
@@ -33,6 +56,19 @@ namespace LeaveManagement.Web.Repositories
             leaveRequest.RequestingEmployeeId = user.Id;
             await this.AddAsync(leaveRequest);
             
+        }
+
+        public async Task<AdminLeaveRequestViewVM> GetAdminLeaveRequestList()
+        {
+            var leaveRequests = await GetAllAsync(); // get all the leave requests
+            var model = new AdminLeaveRequestViewVM();
+
+            model.TotalRequests=leaveRequests.Count;
+            model.RejectedRequests = leaveRequests.Count(y => y.Approved == false);
+            model.ApprovedRequests = leaveRequests.Count(y=>y.Approved==true);
+            model.PendingRequests = leaveRequests.Count(y => y.Approved == null);//assuming canceled will be false in the Approved field
+            model.LeaveRequests = mapper.Map<List<LeaveRequestVM>>(leaveRequests);
+            return model;
         }
 
         public async Task<List<LeaveRequest>> GetAllAsync(string employeedId)
