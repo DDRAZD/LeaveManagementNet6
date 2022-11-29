@@ -35,24 +35,22 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="LeaveRequests" asp-action="MyLeave">My Leave</a>
                         </li>
-                        @if(User.IsInRole(Roles.Administrator))
+                        @if (User.IsInRole(Roles.Administrator))
                         {
-                           
-                            <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Employees" asp-action="Index">Employees</a>
-                        </li>
-                            <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                LeaveManagement
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                                <li><a class="dropdown-item"asp-controller="LeaveTypes" asp-action="Index">Leave Types</a></li>
-                                <li><a class="dropdown-item" href="#">Leave Allocations</a></li>
 
-                                <li><a class="dropdown-item" href="#">Leave Requests</a></li>
-                                <li><a class="dropdown-item" href="#">Employee Management</a></li>
-                            </ul>
-                        </li> 
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Employees" asp-action="Index">Employees</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    LeaveManagement
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                                    <li><a class="dropdown-item" asp-controller="LeaveTypes" asp-action="Index">Leave Types</a></li>
+                                    <li><a class="dropdown-item" asp-controller="LeaveRequests" asp-action="Index">Leave Requests</a></li>
+
+                                </ul>
+                            </li>
                         }
                        
                     </ul>
