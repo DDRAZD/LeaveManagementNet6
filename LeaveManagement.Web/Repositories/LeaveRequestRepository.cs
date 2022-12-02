@@ -60,7 +60,7 @@ namespace LeaveManagement.Web.Repositories
 
         public async Task<AdminLeaveRequestViewVM> GetAdminLeaveRequestList()
         {
-            var leaveRequests = await GetAllAsync(); // get all the leave requests
+            var leaveRequests = await context.LeaveRequests.Include(q=>q.LeaveType).ToListAsync(); // get all the leave requests
             var model = new AdminLeaveRequestViewVM();
 
             model.TotalRequests=leaveRequests.Count;
@@ -68,6 +68,11 @@ namespace LeaveManagement.Web.Repositories
             model.ApprovedRequests = leaveRequests.Count(y=>y.Approved==true);
             model.PendingRequests = leaveRequests.Count(y => y.Approved == null);//assuming canceled will be false in the Approved field
             model.LeaveRequests = mapper.Map<List<LeaveRequestVM>>(leaveRequests);
+            foreach(var leaveRequest in model.LeaveRequests)
+            {
+                leaveRequest.Employee =  mapper.Map<EmployeeListVM>(await userManager.FindByIdAsync(leaveRequest.RequestingEmployeeId));
+            }
+
             return model;
         }
 
