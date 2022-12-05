@@ -104,7 +104,7 @@ namespace LeaveManagement.Web.Repositories
             return true;
         }
 
-        public async Task<LeaveAllocation> GetEmployeeAllocation(string employeeId, int Id)
+        public async Task<LeaveAllocation?> GetEmployeeAllocation(string employeeId, int Id)
         {
             var allocations = await context.LeaveAllocations
                .Include(a => a.LeaveType).Where(y => y.EmployeeId == employeeId).ToListAsync(); //gets all types of allocations for the employee (sick, vacation etc)

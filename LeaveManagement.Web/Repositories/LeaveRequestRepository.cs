@@ -40,7 +40,7 @@ namespace LeaveManagement.Web.Repositories
             {
                 var allocation = await leaveAllocationRepository.GetEmployeeAllocation(leaveRequest.RequestingEmployeeId, leaveRequestId);
                 int daysRequested = (int)(leaveRequest.EndDate - leaveRequest.StartDate).TotalDays;
-                allocation.NumberOfDays = daysRequested;
+                allocation.NumberOfDays = allocation.NumberOfDays - daysRequested;
 
                 await leaveAllocationRepository.UpdateAsync(allocation);
             }
