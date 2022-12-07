@@ -1,15 +1,52 @@
-﻿@model LeaveManagement.Web.Data.LeaveRequest
+﻿@model LeaveRequestVM
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Leave Request Details";
+    string className;
+    string headingText;
+    if (Model.Approved == null)
+    {
+        headingText = "Pending Approval";
+        className = "warning";
+    }
+    else if (Model.Approved == true)
+    {
+        headingText = "Approved";
+        className = "success";
+    }
+    else
+    {
+        headingText = "Rejected";
+        className = "danger";
+    }
 }
 
-<h1>Details</h1>
+<h1>Leave Request Details</h1>
+
+<div class="alert alert-@className" role="alert">
+    <h4 class="alert-heading">@headingText</h4>
+    <hr />
+    <p>
+        <strong> Employee name: </strong>@Model.Employee.FirstName  @Model.Employee.LastName
+    </p>
+
+    <hr />
+    <p>
+        <strong> Date Requested: </strong>@Html.DisplayFor(model=>model.DateRequested)
+    </p>
+</div>
+
 
 <div>
     <h4>LeaveRequest</h4>
     <hr />
     <dl class="row">
+
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LeaveType)
+        </dt>
+
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.StartDate)
         </dt>
@@ -22,57 +59,31 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.EndDate)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LeaveType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LeaveType.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateRequested)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateRequested)
-        </dd>
+        
+        
+        
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.RequestComments)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.RequestComments)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RequestingEmployeeId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RequestingEmployeeId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Approved)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Approved)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cancelled)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cancelled)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateModified)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateModified)
-        </dd>
+        
+      
+        
+        
+        
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if(Model.Approved==null)
+    {
+        <form asp-action="ApproveRequest">
+            <input asp-for="Id" type="hidden" />
+            <button type="submit" asp-route-approved="true" class="btn btn-success"> Approve </button>
+            <button type="submit" asp-route-approved="false" class="btn btn-danger"> Reject </button>
+
+        </form>
+    }
+    <a class="btn btn-dark" asp-action="Index">Back to List</a>
 </div>

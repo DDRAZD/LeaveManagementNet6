@@ -49,20 +49,32 @@ namespace LeaveManagement.Web.Controllers
         // GET: LeaveRequests/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.LeaveRequests == null)
-            {
-                return NotFound();
-            }
-
-            var leaveRequest = await _context.LeaveRequests
-                .Include(l => l.LeaveType)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (leaveRequest == null)
-            {
-                return NotFound();
-            }
-
+           
+            var leaveRequest = await leaveRequestRepository.GetLeaveRequestAsync(id);
+            
             return View(leaveRequest);
+        }
+
+
+        /// <summary>
+        /// approving the request - buttons for approval and rejection are located within a form in the details view
+        /// </summary>
+        /// <returns></returns>
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApproveRequest(int id, bool Approved)
+        {
+            try
+            {
+                await leaveRequestRepository.ChangeApprovalStatus(id, Approved);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: LeaveRequests/Create
