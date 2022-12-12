@@ -43,6 +43,10 @@ namespace LeaveManagement.Web.Controllers
         public async Task<IActionResult> MyLeave()
         {
             var model = await leaveRequestRepository.GetMyLeaveDetails();
+            if(model == null)
+            {
+                return NotFound();
+            }
             return View(model);
         }
 
