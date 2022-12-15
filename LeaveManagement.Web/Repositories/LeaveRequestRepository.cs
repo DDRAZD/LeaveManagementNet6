@@ -24,6 +24,13 @@ namespace LeaveManagement.Web.Repositories
             this.userManager = userManager;
         }
 
+        public async Task CancelLeaveRequest(int leaveRequestId)
+        {
+            var leaveRequest = await GetAsync(leaveRequestId);
+            leaveRequest.Cancelled = true;
+            await UpdateAsync(leaveRequest);
+        }
+
         /// <summary>
         /// updates the allocation - after you approve a leave, the allocation has to drop as you used it
         /// </summary>

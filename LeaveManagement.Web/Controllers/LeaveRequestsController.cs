@@ -29,7 +29,7 @@ namespace LeaveManagement.Web.Controllers
         }
 
 
-        [Authorize(Roles =Roles.Administrator)]
+       [Authorize(Roles =Roles.Administrator)]
         // GET: LeaveRequests
         public async Task<IActionResult> Index()
         {
@@ -81,6 +81,23 @@ namespace LeaveManagement.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        [HttpPost, ActionName("Cancel")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CancelRequest(int id)
+        {
+            try
+            {
+                await leaveRequestRepository.CancelLeaveRequest(id);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
         // GET: LeaveRequests/Create
         public IActionResult Create()
         {
@@ -108,7 +125,7 @@ namespace LeaveManagement.Web.Controllers
                     //   await leaveRequestRepository.AddAsync(leaveRequest);
 
                     await leaveRequestRepository.CreateLeaveRequest(model);
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(MyLeave));
                 }
                
             }

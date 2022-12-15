@@ -26,15 +26,20 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between container">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
+                        @if(User.IsInRole(Roles.User))
+                        {
+<li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="LeaveRequests" asp-action="Create">Apply For Leave</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="LeaveRequests" asp-action="MyLeave">My Leave</a>
                         </li>
+                        }
+                       
+                        
                         @if (User.IsInRole(Roles.Administrator))
                         {
 
