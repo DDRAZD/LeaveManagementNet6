@@ -54,14 +54,32 @@ namespace LeaveManagement.Web.Repositories
             await UpdateAsync(leaveRequest);
         }
 
-        public async Task CreateLeaveRequest(LeaveRequestCreateVM model)
+        public async Task<bool> CreateLeaveRequest(LeaveRequestCreateVM model)
         {
             var user = await userManager.GetUserAsync(httpContextAccessor?.HttpContext?.User);
+
+           var allocations =  await leaveAllocationRepository.GetEmployeeAllocation(user.Id,model.LeaveTypeId);
+
+            //the view model validations themselves (MoodelState.IsValid) gurantee start and end date are not null here
+            int requestedDuration = (int)(model.EndDate.Value - model.StartDate.Value).TotalDays;
+           
+            if(allocations!=null)
+            {
+                if(allocations.NumberOfDays< requestedDuration)
+                    return false;
+            }
+            else
+            {
+                return false; //allocations is null
+            }
+            //allocations is not null and it is larger than duration requested:
+
             var leaveRequest = mapper.Map<LeaveRequest>(model);
             leaveRequest.DateRequested = DateTime.Now;
             leaveRequest.Cancelled = false;
             leaveRequest.RequestingEmployeeId = user.Id;
             await this.AddAsync(leaveRequest);
+            return true;
             
         }
 

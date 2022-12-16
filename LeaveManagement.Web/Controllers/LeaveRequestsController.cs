@@ -103,10 +103,9 @@ namespace LeaveManagement.Web.Controllers
         {
             var model = new LeaveRequestCreateVM();
             model.LeaveTypes = new SelectList(_context.LeaveTypes, "Id", "Name");
-         //   model.StartDate = DateTime.Now;
-          //  model.EndDate = DateTime.Now;
+           
             
-            //ViewData["LeaveTypeId"] = new SelectList(_context.LeaveTypes, "Id", "Name");
+     
             return View(model);
         }
 
@@ -124,8 +123,15 @@ namespace LeaveManagement.Web.Controllers
                     // var leaveRequest = mapper.Map<LeaveRequest>(model);
                     //   await leaveRequestRepository.AddAsync(leaveRequest);
 
-                    await leaveRequestRepository.CreateLeaveRequest(model);
-                    return RedirectToAction(nameof(MyLeave));
+                    bool create = await leaveRequestRepository.CreateLeaveRequest(model);
+                    if(create == true)
+                    {
+                        return RedirectToAction(nameof(MyLeave));
+                    }
+                    else
+                    {
+                        ModelState.TryAddModelError(string.Empty, "not enough days to create request");
+                    }
                 }
                
             }

@@ -19,6 +19,8 @@ namespace LeaveManagement.Web.Models
         public int LeaveTypeId { get; set; } //useful for dropdown list
         public SelectList? LeaveTypes { get; set; } //for the drop down list
 
+     
+
       //  public DateTime DateRequested { get; set; }
 
         [Display(Name ="Comments")]
@@ -38,7 +40,12 @@ namespace LeaveManagement.Web.Models
                     yield return new ValidationResult("comment too long", new[] { nameof(RequestComments) });
                 }
             }
+          
             
+                
+            
+
+          
         }
 
         //  public string RequestingEmployeeId { get; set; }
