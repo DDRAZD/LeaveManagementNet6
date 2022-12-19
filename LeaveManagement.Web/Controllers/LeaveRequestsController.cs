@@ -84,18 +84,18 @@ namespace LeaveManagement.Web.Controllers
 
         [HttpPost, ActionName("Cancel")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CancelRequest(int id)
+        public async Task<IActionResult> CancelRequest(int Id)
         {
             try
             {
-                await leaveRequestRepository.CancelLeaveRequest(id);
+                await leaveRequestRepository.CancelLeaveRequest(Id);
             }
             catch (Exception ex)
             {
                 throw;
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(MyLeave));
         }
 
         // GET: LeaveRequests/Create
