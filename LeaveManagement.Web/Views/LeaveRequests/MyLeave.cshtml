@@ -108,7 +108,7 @@
 
                 <td>
                    
-                    @if (item.Approved == null)
+                    @if (item.Approved == null && item.Cancelled!=true)
                     {
                         <form asp-action="Cancel">
                             <input  value="@item.Id" name="Id" type="hidden" />

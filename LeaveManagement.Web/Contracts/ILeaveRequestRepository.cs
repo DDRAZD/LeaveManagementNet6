@@ -12,7 +12,7 @@ namespace LeaveManagement.Web.Contracts
 
         Task CancelLeaveRequest(int leaveRequestId);
 
-        Task<List<LeaveRequest>> GetAllAsync(string employeedId); //overloading the generic method
+        Task<List<LeaveRequestVM>> GetAllAsync(string employeedId); //overloading the generic method
 
         Task ChangeApprovalStatus(int leaveRequestId, bool approved);
         Task<AdminLeaveRequestViewVM> GetAdminLeaveRequestList();
