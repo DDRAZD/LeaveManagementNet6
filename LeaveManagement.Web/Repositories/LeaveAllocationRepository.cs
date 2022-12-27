@@ -5,6 +5,7 @@ using LeaveManagement.Web.Contracts;
 using LeaveManagement.Web.Data;
 using LeaveManagement.Web.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace LeaveManagement.Web.Repositories
@@ -15,18 +16,21 @@ namespace LeaveManagement.Web.Repositories
         private readonly UserManager<Employee> userManager;
         private readonly ILeaveTypeRepository leaveTypeRepository;
         private readonly IMapper mapper;
+        private readonly IEmailSender emailSender;
         private readonly AutoMapper.IConfigurationProvider configurationProvider;
 
         public LeaveAllocationRepository(ApplicationDbContext context, 
             UserManager<Employee> userManager, 
             ILeaveTypeRepository leaveTypeRepository,             
             AutoMapper.IConfigurationProvider configurationProvider,
-            IMapper mapper) : base(context)
+            IMapper mapper,
+            IEmailSender emailSender) : base(context)
         {
             this.context = context;
             this.userManager = userManager;
             this.leaveTypeRepository = leaveTypeRepository;
             this.mapper = mapper;
+            this.emailSender = emailSender;
             this.configurationProvider = configurationProvider;
         }
 
@@ -82,6 +86,8 @@ namespace LeaveManagement.Web.Repositories
 
             List<LeaveAllocation> allocations = new List<LeaveAllocation>();
 
+            var employeesWithNewAllocaitons = new List<Employee>();
+
             foreach (var employee in employees)
             {
                 if (await AllocationExists(employee.Id, leaveTypeId, period))
@@ -94,10 +100,20 @@ namespace LeaveManagement.Web.Repositories
                     LeaveTypeId = leaveTypeId,
                     NumberOfDays = leaveType.DefaultDays                   
                 });
+                employeesWithNewAllocaitons.Add(employee);
                 
               
             }
             await AddRangeAsync(allocations);
+
+            foreach(var employee in employeesWithNewAllocaitons)
+            {
+                
+                await emailSender.SendEmailAsync(employee.Email, $"Leave allocation posted for {period}", $"Your {leaveType.Name} leave " +
+                    $"has been posted for the period {period}. You have been given {leaveType.DefaultDays}");
+            }
+
+
             
         }
 
