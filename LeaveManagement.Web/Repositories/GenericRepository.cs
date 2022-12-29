@@ -65,8 +65,10 @@ namespace LeaveManagement.Web.Repositories
 
         public async Task UpdateAsync(T entity)
         {
-            //context.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            context.Update(entity);
+            //this means: take the original data of the entity, just mark its state as "modified" (then in the override of the save changes will 
+            //catch the change of the base DateCreated and DateModified
+            context.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            //context.Update(entity);
             await context.SaveChangesAsync();
         }
     }

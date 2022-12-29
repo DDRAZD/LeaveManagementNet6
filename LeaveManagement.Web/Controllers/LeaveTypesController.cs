@@ -121,15 +121,24 @@ namespace LeaveManagement.Web.Controllers
                 return NotFound();
             }
 
+            var leaveType = await leaveTypeRepositiry.GetAsync(id);
+            if(leaveType == null)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
                 try //all done in try-catch for the case someone else is also submitting at same time
                 {
-                    LeaveType leaveType = this.mapper.Map<LeaveType>(leaveTypeVM);
-                    leaveType.DateModified = DateTime.Now;
+                    
+                    //different type of mapping so we keep the date created untouched:
+                    //this is just like casting the value; becuase i already have here the date created, it wont be overriden as doest no exist for the model
+                    mapper.Map(leaveTypeVM, leaveType);//source and destination for mapping|whatever fields that are incommon will be momved over
+                   
+                   
                     await this.leaveTypeRepositiry.UpdateAsync(leaveType);
-                  //  _context.Update(leaveType);
-                  //  await _context.SaveChangesAsync();
+               
                 }
                 catch (DbUpdateConcurrencyException) //if two people are updating at same time, that is the issue this catches
                 {
