@@ -7,6 +7,7 @@ using LeaveManagement.Web.Contracts;
 using LeaveManagement.Web.Repositories;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using LeaveManagement.Web.Services;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,10 +29,20 @@ builder.Services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository
 builder.Services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
 builder.Services.AddAutoMapper(typeof(MapperConfig));
 
+//ctx = context of the file we are in
+//lc = the configration for the logger
+//the "Configuration" will cause to jump to app seetings.json file and look for the Serilog config (as this is UseSerilog)
+builder.Host.UseSerilog((ctx,lc)=>
+lc.WriteTo.Console().ReadFrom.Configuration(ctx.Configuration));
+
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+//invoking thr logging middleware:
+
+app.UseSerilogRequestLogging();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

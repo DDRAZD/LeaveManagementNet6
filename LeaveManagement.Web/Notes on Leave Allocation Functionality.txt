@@ -119,3 +119,14 @@ on https://jqueryui.com/datepicker/ you can "view source" and see what it takes 
  yield return new ValidationResult("the start date cannot be after end date",new[] {nameof(StartDate), nameof(EndDate)});
  "yield" allows you to return mulitple things - basically it is "stop here, return and then come back to continue"
 
+ libraries to support loging:
+
+ serilog.aspnetcore
+ serilog.expressions
+ serliog.sinks.seq
+
+ go to nuget package manager to install
+
+ <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+    <PackageReference Include="Serilog.Expressions" Version="3.4.1" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.2" />

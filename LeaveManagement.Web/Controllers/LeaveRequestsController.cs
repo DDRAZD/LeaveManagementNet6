@@ -20,12 +20,16 @@ namespace LeaveManagement.Web.Controllers
         private readonly ApplicationDbContext _context;
         //private readonly IMapper mapper;
         private readonly ILeaveRequestRepository leaveRequestRepository;
+        private readonly ILogger<LeaveRequestsController> logger;
 
-        public LeaveRequestsController(ApplicationDbContext context, ILeaveRequestRepository leaveRequestRepository)
+        public LeaveRequestsController(ApplicationDbContext context, 
+            ILeaveRequestRepository leaveRequestRepository,
+            ILogger<LeaveRequestsController> logger)
         {
             _context = context;
            // this.mapper = mapper;
             this.leaveRequestRepository = leaveRequestRepository;
+            this.logger = logger;
         }
 
 
@@ -75,7 +79,8 @@ namespace LeaveManagement.Web.Controllers
             }
             catch (Exception ex)
             {
-                throw;
+                logger.LogError(ex, "Something happened in the ApproveRequest method");//login manually
+                throw;//the throw (unhandled exception that collapses the program) will be logged by the Error method in home controller
             }
             
             return RedirectToAction(nameof(Index));
