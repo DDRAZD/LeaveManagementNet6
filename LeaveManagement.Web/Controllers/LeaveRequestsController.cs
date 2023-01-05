@@ -97,6 +97,7 @@ namespace LeaveManagement.Web.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, "Something happened in the CancelRequest method");
                 throw;
             }
 
@@ -142,6 +143,7 @@ namespace LeaveManagement.Web.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, "Something happened in the Create method");
                 ModelState.AddModelError(String.Empty, "an error has occored in the leave request controller as an exception");
             }
             //this is in case we need to reload - the list is not tracked in the form so need to load it

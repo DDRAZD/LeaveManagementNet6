@@ -44,10 +44,10 @@ namespace LeaveManagement.Web.Repositories
 
 
 
-            var user = await userManager.FindByIdAsync(leaveRequest.RequestingEmployeeId);
-            var approvalStatus = "Canceled";
+           // var user = await userManager.FindByIdAsync(leaveRequest.RequestingEmployeeId);
+            //var approvalStatus = "Canceled";
 
-            await emailSender.SendEmailAsync(user.Email, $"Leave Request {approvalStatus}", $"your leave request from " + $"{leaveRequest.StartDate} to {leaveRequest.EndDate} has been {approvalStatus}");
+           // await emailSender.SendEmailAsync(user.Email, $"Leave Request {approvalStatus}", $"your leave request from " + $"{leaveRequest.StartDate} to {leaveRequest.EndDate} has been {approvalStatus}");
         }
 
         /// <summary>
@@ -72,11 +72,11 @@ namespace LeaveManagement.Web.Repositories
             }
             await UpdateAsync(leaveRequest);
 
-            var user = await userManager.FindByIdAsync(leaveRequest.RequestingEmployeeId);
+          /*  var user = await userManager.FindByIdAsync(leaveRequest.RequestingEmployeeId);
 
             var approvalStatus = approved ? "Approved" : "Declined";
 
-            await emailSender.SendEmailAsync(user.Email, $"Leave Request {approvalStatus}", $"your leave request from " + $"{leaveRequest.StartDate} to {leaveRequest.EndDate} has been {approvalStatus}");
+            await emailSender.SendEmailAsync(user.Email, $"Leave Request {approvalStatus}", $"your leave request from " + $"{leaveRequest.StartDate} to {leaveRequest.EndDate} has been {approvalStatus}");*/
         }
 
         public async Task<bool> CreateLeaveRequest(LeaveRequestCreateVM model)
@@ -105,7 +105,7 @@ namespace LeaveManagement.Web.Repositories
             leaveRequest.RequestingEmployeeId = user.Id;
             await this.AddAsync(leaveRequest);
 
-           await  emailSender.SendEmailAsync(user.Email, "Request Created", $"your leave request from " + $"{leaveRequest.StartDate} to {leaveRequest.EndDate} has been submitted for approval");
+          // await  emailSender.SendEmailAsync(user.Email, "Request Created", $"your leave request from " + $"{leaveRequest.StartDate} to {leaveRequest.EndDate} has been submitted for approval");
 
             return true;
             

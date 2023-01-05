@@ -33,7 +33,8 @@ builder.Services.AddAutoMapper(typeof(MapperConfig));
 //lc = the configration for the logger
 //the "Configuration" will cause to jump to app seetings.json file and look for the Serilog config (as this is UseSerilog)
 builder.Host.UseSerilog((ctx,lc)=>
-lc.WriteTo.Console().ReadFrom.Configuration(ctx.Configuration));
+lc.WriteTo.Console()
+.ReadFrom.Configuration(ctx.Configuration));
 
 
 builder.Services.AddControllersWithViews();
