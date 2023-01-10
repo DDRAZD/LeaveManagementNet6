@@ -37,6 +37,8 @@ namespace LeaveManagement.Web.Controllers
        //     var leaveTypes = this.mapper.Map<List<LeaveTypeVM>>(await _context.LeaveTypes.ToListAsync()); //in sql this is "Select * From LeaveType"
             var leaveTypes = this.mapper.Map<List<LeaveTypeVM>>(await this.leaveTypeRepositiry.GetAllAsync());
 
+          //for testing logging and Seq:  throw new Exception("see if this works, should crash as you are in developer mode");
+
             if (leaveTypes != null)
             {
                 return View(leaveTypes);
