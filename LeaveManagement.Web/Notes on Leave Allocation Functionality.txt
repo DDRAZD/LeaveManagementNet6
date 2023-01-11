@@ -136,3 +136,21 @@ on https://jqueryui.com/datepicker/ you can "view source" and see what it takes 
 
     Seq (prounounces "Seek") is a third pary tool that allows you to see the log files
     https://datalust.co/seq
+
+
+    ---------------------------
+
+    seperation of concerns
+
+    As data is not part of the web, we can separate it out to a separate solution
+    go to solution
+    add
+    new project
+
+    class library
+
+    name it something with "data" or "persistence"
+
+
+
+
