@@ -1,5 +1,5 @@
 ﻿using LeaveManagement.Web.Contracts;
-using LeaveManagement.Web.Data;
+using LeaveManagement.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace LeaveManagement.Web.Repositories
