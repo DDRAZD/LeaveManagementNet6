@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 
-namespace LeaveManagement.Web.Models
+namespace LeaveManagement.Common.Models
 {
     public class LeaveTypeVM
     {

@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using LeaveManagement.Web.Contracts;
+using LeaveManagement.Application.Contracts;
 using LeaveManagement.Data;
-using LeaveManagement.Web.Models;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using LeaveManagement.Common.Models;
 
-namespace LeaveManagement.Web.Repositories
+namespace LeaveManagement.Application.Repositories
 {
     public class LeaveRequestRepository : GenericRepository<LeaveRequest>, ILeaveRequestRepository
     {
@@ -160,7 +162,7 @@ namespace LeaveManagement.Web.Repositories
 
             EmployeeLeaveRequestViewVM model = new EmployeeLeaveRequestViewVM()
             {
-                LeavLeaveAllocations = leaveAllocations,
+                LeaveAllocations = leaveAllocations,
                 LeaveRequests = requestsVM
             };
             return model;

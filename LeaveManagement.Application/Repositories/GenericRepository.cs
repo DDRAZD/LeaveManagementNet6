@@ -1,8 +1,8 @@
-﻿using LeaveManagement.Web.Contracts;
+﻿using LeaveManagement.Application.Contracts;
 using LeaveManagement.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace LeaveManagement.Web.Repositories
+namespace LeaveManagement.Application.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {

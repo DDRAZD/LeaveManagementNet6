@@ -1,4 +1,4 @@
-﻿namespace LeaveManagement.Web.Models
+﻿namespace LeaveManagement.Common.Models
 {
     public class LeaveAllocationEditVM: LeaveAllocationVM
     {

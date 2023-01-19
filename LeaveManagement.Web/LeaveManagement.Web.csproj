@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LeaveManagement.Application\LeaveManagement.Application.csproj" />
     <ProjectReference Include="..\LeaveManagement.Data\LeaveManagement.Data.csproj" />
   </ItemGroup>
 

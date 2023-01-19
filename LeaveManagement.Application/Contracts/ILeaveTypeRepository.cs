@@ -1,6 +1,6 @@
 ﻿using LeaveManagement.Data;
 
-namespace LeaveManagement.Web.Contracts
+namespace LeaveManagement.Application.Contracts
 {
     public interface ILeaveTypeRepository:IGenericRepository<LeaveType>
     {
