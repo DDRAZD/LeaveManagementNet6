@@ -152,5 +152,12 @@ on https://jqueryui.com/datepicker/ you can "view source" and see what it takes 
     name it something with "data" or "persistence"
 
 
+    -----------------------------
+    admin theme for layout
+
+    adminlte.io
+
+    or 
+    https://demos.wrappixel.com/premium-admin-templates/bootstrap/xtreme-bootstrap/landingpage/index.html
 
 
