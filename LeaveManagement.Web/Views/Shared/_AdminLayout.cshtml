@@ -813,72 +813,60 @@
                 </a>
               </li>
               <!-- User Profile-->
-              <li class="nav-small-cap">
-                <i class="mdi mdi-dots-horizontal"></i>
-                <span class="hide-menu">Personal</span>
-              </li>
-              <li class="sidebar-item">
-                <a
-                  class="sidebar-link has-arrow waves-effect waves-dark"
-                  href="#"
-                  aria-expanded="false"
-                  ><i data-feather="home" class="feather-icon"></i
-                  ><span class="hide-menu">Dashboard </span></a
-                >
-                <ul aria-expanded="false" class="collapse first-level">
-                  <li class="sidebar-item">
-                    <a href="index.html" class="sidebar-link"
-                      ><i class="mdi mdi-adjust"></i><span class="hide-menu"> Classic </span></a
-                    >
-                  </li>
-                  <li class="sidebar-item">
-                    <a href="index2.html" class="sidebar-link"
-                      ><i class="mdi mdi-adjust"></i><span class="hide-menu"> Analytical </span></a
-                    >
-                  </li>
-                  <li class="sidebar-item">
-                    <a href="index3.html" class="sidebar-link"
-                      ><i class="mdi mdi-adjust"></i
-                      ><span class="hide-menu"> Cryptocurrency </span></a
-                    >
-                  </li>
-                  <li class="sidebar-item">
-                    <a href="index4.html" class="sidebar-link"
-                      ><i class="mdi mdi-adjust"></i><span class="hide-menu"> Overview </span></a
-                    >
-                  </li>
-                  <li class="sidebar-item">
-                    <a href="index5.html" class="sidebar-link"
-                      ><i class="mdi mdi-adjust"></i><span class="hide-menu"> E-Commerce </span></a
-                    >
-                  </li>
-                  <li class="sidebar-item">
-                    <a href="index6.html" class="sidebar-link"
-                      ><i class="mdi mdi-adjust"></i><span class="hide-menu"> Sales </span></a
-                    >
-                  </li>
-                  <li class="sidebar-item">
-                    <a href="index7.html" class="sidebar-link"
-                      ><i class="mdi mdi-adjust"></i><span class="hide-menu"> General </span></a
-                    >
-                  </li>
-                  <li class="sidebar-item">
-                    <a href="index8.html" class="sidebar-link"
-                      ><i class="mdi mdi-adjust"></i><span class="hide-menu"> Trendy </span></a
-                    >
-                  </li>
-                  <li class="sidebar-item">
-                    <a href="index9.html" class="sidebar-link"
-                      ><i class="mdi mdi-adjust"></i><span class="hide-menu"> Campaign </span></a
-                    >
-                  </li>
-                  <li class="sidebar-item">
-                    <a href="index10.html" class="sidebar-link"
-                      ><i class="mdi mdi-adjust"></i><span class="hide-menu"> Modern </span></a
-                    >
-                  </li>
-                </ul>
-              </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" asp-area="" asp-controller="Home" asp-action="Index" aria-expanded="false">
+                                <i data-feather="home" class="feather-icon"></i>
+                                <span class="hide-menu">LeaveManagement Web Net 6 </span>
+                            </a>
+                        </li>
+                        @if (User.IsInRole(Roles.User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="LeaveRequests" asp-action="Create">Apply For Leave</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="LeaveRequests" asp-action="MyLeave">My Leave</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="index.html" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Classic </span></a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="index2.html" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Analytical </span></a>
+                            </li>
+                        }
+                       
+
+                        @if (User.IsInRole(Roles.Administrator))
+                        {
+
+                          @*  <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Employees" asp-action="Index">Employees</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    LeaveManagement
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                                    <li><a class="dropdown-item" asp-controller="LeaveTypes" asp-action="Index">Leave Types</a></li>
+                                    <li><a class="dropdown-item" asp-controller="LeaveRequests" asp-action="Index">Leave Requests</a></li>
+
+                                </ul>
+                            </li>*@
+
+                            <li class="sidebar-item">
+                                <a asp-controller="LeaveTypes" asp-action="Index" class="sidebar-link">
+                                    <i class="mdi mdi-adjust"></i><span class="hide-menu"> Leave Types </span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a asp-controller="LeaveRequests" asp-action="Index" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Leave Requests </span></a>
+                            </li>
+                        }
+                
+                
+                  
+                 
               <li class="sidebar-item">
                 <a
                   class="sidebar-link has-arrow waves-effect waves-dark"
@@ -2361,7 +2349,12 @@
       <!-- Page wrapper  -->
       <!-- -------------------------------------------------------------- -->
       <div class="page-wrapper">
-          @RenderBody()
+          <div class="container-fluid">
+              <div class="row">
+                   @RenderBody()
+              </div>
+          </div>
+         
       </div>
       <!-- -------------------------------------------------------------- -->
       <!-- End Page wrapper  -->
@@ -2803,24 +2796,24 @@
     <!-- Bootstrap tether Core JavaScript -->
     
     <!-- Theme Required Js -->
-    <script src="../../dist/js/app.min.js"></script>
-    <script src="../../dist/js/app.init.js"></script>
-    <script src="../../dist/js/app-style-switcher.js"></script>
+    <script src="~/js/app.min.js"></script>
+    <script src="~/js/app.init.js"></script>
+    <script src="~/js/app-style-switcher.js"></script>
     <!-- perfect scrollbar JavaScript -->
-    <script src="../../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="../../assets/extra-libs/sparkline/sparkline.js"></script>
+    <script src="~/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/js/sparkline.js"></script>
     <!--Wave Effects -->
-    <script src="../../dist/js/waves.js"></script>
+    <script src="~/js/waves.js"></script>
     <!--Menu sidebar -->
-    <script src="../../dist/js/sidebarmenu.js"></script>
+    <script src="~/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
-    <script src="../../dist/js/feather.min.js"></script>
-    <script src="../../dist/js/custom.min.js"></script>
+    <script src="~/js/feather.min.js"></script>
+    <script src="~/js/custom.min.js"></script>
     <!-- --------------------------------------------------------------- -->
     <!-- This page JavaScript -->
     <!-- --------------------------------------------------------------- -->
     
-    <script src="../../dist/js/pages/dashboards/dashboard1.js"></script>
+    @*<script src="~/js/dashboard1.js"></script>*@
 
     <script>
       $(function(){
