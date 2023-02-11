@@ -1,5 +1,10 @@
 ﻿<!DOCTYPE html>
 <html dir="ltr" lang="en">
+
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@inject SignInManager<Employee> SignInManager
+@inject UserManager<Employee> UserManager
   <head>
     
       <meta charset="utf-8" />
@@ -752,67 +757,53 @@
           <nav class="sidebar-nav">
             <ul id="sidebarnav">
               <!-- User Profile-->
-              <li>
-                <!-- User Profile-->
-                <div class="user-profile d-flex no-block dropdown mt-3">
-                  <div class="user-pic">
-                    <img
-                      src="~/images/users/1.jpg"
-                      alt="users"
-                      class="rounded-circle"
-                      width="40"
-                    />
-                  </div>
-                  <div class="user-content hide-menu ms-2">
-                    <a
-                      href="#"
-                      class=""
-                      id="Userdd"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      <h5 class="mb-0 user-name font-medium">
-                        Steave Jobs
-                        <i data-feather="chevron-down" class="feather-sm"></i>
-                      </h5>
-                      <span class="op-5 user-email">varun@gmail.com</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="Userdd">
-                      <a class="dropdown-item" href="#"
-                        ><i data-feather="user" class="feather-sm text-info me-1"></i> My Profile</a
-                      >
-                      <a class="dropdown-item" href="#"
-                        ><i data-feather="credit-card" class="feather-sm text-primary me-1"></i> My
-                        Balance</a
-                      >
-                      <a class="dropdown-item" href="#"
-                        ><i data-feather="mail" class="feather-sm text-success me-1"></i> Inbox</a
-                      >
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#"
-                        ><i data-feather="settings" class="feather-sm text-warning me-1"></i>
-                        Account Setting</a
-                      >
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#"
-                        ><i data-feather="log-out" class="feather-sm text-danger me-1"></i>
-                        Logout</a
-                      >
-                    </div>
-                  </div>
-                </div>
-                <!-- End User Profile-->
-              </li>
-              <li class="p-3 mt-2">
-                <a
-                  href="#"
-                  class="btn btn-block create-btn text-white no-block d-flex align-items-center"
-                  ><i data-feather="plus-square" class="feather-sm"></i>
-                  <span class="hide-menu ms-1">Create New</span>
-                </a>
-              </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li>
+                                <!-- User Profile-->
+                            <div class="user-profile d-flex no-block dropdown mt-3">
+                                    <div class="user-pic">
+                                        <img src="~/images/users/1.jpg"
+                                         alt="users"
+                                         class="rounded-circle"
+                                         width="40" />
+                                    </div>
+                                    <div class="user-content hide-menu ms-2">
+                                        <a href="#"
+                                       class=""
+                                       id="Userdd"
+                                       role="button"
+                                       data-bs-toggle="dropdown"
+                                       aria-haspopup="true"
+                                       aria-expanded="false">
+                                            <h5 class="mb-0 user-name font-medium">
+                                                @User.Identity?.Name
+                                                
+                                            </h5>
+                                            <span class="op-5 user-role">@User.FindFirstValue(ClaimTypes.Role)</span>
+                                        </a>
+
+                                    </div>
+                                </div>
+                                <!-- End User Profile-->
+                        </li>
+                            <li class="p-3 mt-2">
+
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                    <button type="submit" class="btn d-block w-100 create-btn text-white no-block d-flex align-items-center">
+                                        <i class="fa fa-power-off feather-sm"></i>
+                                        <span class="hide-menu ms-1">Logout</span>
+                                    </button>
+                                </form>
+
+                            </li>
+
+                        }
+                        else
+                        {
+
+                        }
+                       
               <!-- User Profile-->
 
                         <li class="sidebar-item">
