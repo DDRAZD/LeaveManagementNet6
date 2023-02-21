@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeaveManagement.Data", "Lea
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeaveManagement.Common", "LeaveManagement.Common\LeaveManagement.Common.csproj", "{D9801A11-455A-4F5A-909D-C26C1E321A8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaveManagement.Application", "LeaveManagement.Application\LeaveManagement.Application.csproj", "{0D3F0E7F-BA48-4924-87AF-B9C06CD7763E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeaveManagement.Application", "LeaveManagement.Application\LeaveManagement.Application.csproj", "{0D3F0E7F-BA48-4924-87AF-B9C06CD7763E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F20EE8C9-158B-4ACE-B805-0DF3BD7634A3}"
+	ProjectSection(SolutionItems) = preProject
+		IIS.txt = IIS.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

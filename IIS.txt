@@ -1,0 +1,10 @@
+C:\Windows\System32\drivers\etc
+
+that is the location of the hosts
+after you add a website in the wwwroot:
+
+C:\inetpub\wwwroot
+
+
+in the drivers/etc go to "hosts" file
+127.0.0.1 test.leavemanagement.com (in my case, that is the name i gave the host when i created the website on IIS Manager)
