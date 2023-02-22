@@ -8,3 +8,15 @@ C:\inetpub\wwwroot
 
 in the drivers/etc go to "hosts" file
 127.0.0.1 test.leavemanagement.com (in my case, that is the name i gave the host when i created the website on IIS Manager)
+
+in IIS Manager, change the managed pools to No Managed Code for the pool associated with the site (it is in basic settings)
+in MS SQL manager, go to the DB you want, to security, to logins, and add a new login (you are adding a user to have acceess); that will be 
+"iis apppool\LeaveManagement"
+
+then create the DB by simply right clicking on Databases and "Add new DB" named leavemanagementNet6 (from the connection string)
+
+then you assign the login to the new database; you go to user mapping -> go to properties of the new user in the logins (right click ->properties)
+user mapping -> mark leavemanagement DB and make sure to mark this user is the DB owner
+
+in wwwroot folder (C:\inetpub\wwwroot\leavemanagement\EFSQLScripts) you can see the EF SQL scripts; open it up with Microsfot SQL manager, chagne the taret DB in the drop down (top left corner) to leavemanagementnet6 and excuete 
+
